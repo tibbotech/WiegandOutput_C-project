@@ -1,0 +1,34 @@
+#include "global.th"
+
+//====================================================================
+
+void on_sys_init()
+{
+	ser.num = 0;
+	
+	ser.mode=PL_SER_MODE_WIEGAND ;
+	ser.txbuffrq(1);
+	sys.buffalloc();
+	ser.interchardelay=10;
+	ser.enabled=NO;
+	ser.enabled=YES;
+	io.num=PL_IO_NUM_9_TX0;
+	io.enabled = YES;
+	io.num =PL_IO_NUM_0;
+	io.enabled = YES;
+	
+	sys.debugprint("Init serial port(1) as Wiegand out" + chr(13)+chr(10));
+}
+
+void on_sys_timer()
+{
+	if (sys.timercount > 10) {
+		string value = bin(sys.timercount);
+		value = right(value,len(value)-2);
+	
+		sys.debugprint("Sending value: " + value + chr(13)+chr(10));
+	
+		ser.setdata(value);
+		ser.send;
+	}
+}
