@@ -2,8 +2,13 @@
 
 //====================================================================
 
+//works with tibbit #08 and tibbit #11
+
 void on_sys_init()
 {
+
+	sys.onsystimerperiod=200; //on_sys_timer function gets called every 2 seconds
+	
 	ser.num = 0;
 	
 	ser.mode=PL_SER_MODE_WIEGAND ;
@@ -22,7 +27,7 @@ void on_sys_init()
 
 void on_sys_timer()
 {
-	if (sys.timercount > 10) {
+	if (sys.timercount > 1) {
 		string value = bin(sys.timercount);
 		value = right(value,len(value)-2);
 	
